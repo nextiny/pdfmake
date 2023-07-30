@@ -71,14 +71,17 @@ class LayoutBuilder {
 				return false;
 			}
 
-			linearNodeList = linearNodeList.filter(node => node.positions.length > 0);
+			linearNodeList = linearNodeList
+				.filter(node => node['pageBreak'] !== undefined || node['checkPageBreak'] !== undefined)
+				.filter(node => node.positions.length > 0);
 
 			linearNodeList.forEach(node => {
 				let nodeInfo = {};
 				[
 					'id', 'text', 'ul', 'ol', 'table', 'image', 'qr', 'canvas', 'svg', 'columns',
 					'headlineLevel', 'style', 'pageBreak', 'pageOrientation',
-					'width', 'height'
+					'width', 'height',
+					'checkPageBreak'
 				].forEach(key => {
 					if (node[key] !== undefined) {
 						nodeInfo[key] = node[key];
